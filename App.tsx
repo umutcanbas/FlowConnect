@@ -1,18 +1,7 @@
-import { View, Text, StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import BottomNavigation from "./src/navigation/BottomNavigation";
 
-export default function HomeScreen() {
-  return (
-    <SafeAreaView style={styles.container}>
-      <Text>Home</Text>
-    </SafeAreaView>
-  );
-}
+const App = () => {
+  return <BottomNavigation />;
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+export default App;
