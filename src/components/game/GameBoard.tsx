@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import { Svg, Line } from "react-native-svg";
 import { GameBoardProps } from "../../types/game";
@@ -82,12 +82,12 @@ const GameBoard: React.FC<GameBoardProps> = ({
               {
                 left: col * cellSize,
                 top: row * cellSize,
-                width: cellSize - 2,
-                height: cellSize - 2,
+                width: cellSize,
+                height: cellSize,
               },
             ]}
           >
-            {isColoredDot ? (
+            {isColoredDot && (
               <View
                 style={[
                   styles.dot,
@@ -96,10 +96,6 @@ const GameBoard: React.FC<GameBoardProps> = ({
                   },
                 ]}
               />
-            ) : (
-              <Text style={styles.cellText}>
-                {row},{col}
-              </Text>
             )}
           </View>
         );
@@ -168,11 +164,6 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: "#444",
     backgroundColor: "transparent",
-  },
-  cellText: {
-    color: "#888",
-    fontSize: 8,
-    textAlign: "center",
   },
   dot: {
     width: 24,
