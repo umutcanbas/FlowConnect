@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import LevelHeader from "../components/game/LevelHeader";
@@ -9,6 +9,9 @@ import GameBoard from "../components/game/GameBoard";
 import { useGameLogic } from "../hooks/useGameLogic";
 
 import { GRID_SIZE, CELL_SIZE, LEVELS } from "../constants/game";
+
+const { height: SCREEN_HEIGHT } = Dimensions.get("window");
+const IS_SMALL_SCREEN = SCREEN_HEIGHT <= 667;
 
 export default function HomeScreen(): React.JSX.Element {
   const gameLogic = useGameLogic();
@@ -50,7 +53,7 @@ export default function HomeScreen(): React.JSX.Element {
           onGestureEvent={gameLogic.onPanGestureEvent}
           onHandlerStateChange={gameLogic.onPanHandlerStateChange}
           gridSize={GRID_SIZE}
-          cellSize={CELL_SIZE + 2}
+          cellSize={CELL_SIZE}
         />
 
         <GameControls
@@ -74,7 +77,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#1a1a1a",
     alignItems: "center",
-    paddingTop: 20,
+    paddingTop: IS_SMALL_SCREEN ? 40 : 60,
     paddingBottom: 30,
   },
 });
