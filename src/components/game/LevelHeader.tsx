@@ -1,11 +1,14 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { LevelHeaderProps } from '../../types/game';
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+
+import { LevelHeaderProps } from "../../types/game";
+
+import { COLORS } from "../../constants/colors";
 
 export default function LevelHeader({
   currentLevel,
   levelIndex,
-  totalLevels
+  totalLevels,
 }: LevelHeaderProps): React.JSX.Element {
   return (
     <View style={styles.container}>
@@ -19,18 +22,18 @@ export default function LevelHeader({
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 20,
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#ffffff',
+    fontWeight: "bold",
+    color: COLORS.PRIMARY_TEXT,
     marginBottom: 10,
   },
   levelText: {
     fontSize: 16,
-    color: '#aaa',
+    color: COLORS.SECONDARY_TEXT,
     marginBottom: 15,
   },
 });
