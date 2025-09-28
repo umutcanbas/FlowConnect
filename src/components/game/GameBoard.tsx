@@ -1,8 +1,11 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
+
 import { PanGestureHandler } from "react-native-gesture-handler";
 import { Svg, Line } from "react-native-svg";
+import { COLORS, PATH_STYLES } from "../../constants/colors";
 import { GameBoardProps } from "../../types/game";
+
 import { BOARD_SIZE } from "../../constants/game";
 
 const GameBoard: React.FC<GameBoardProps> = ({
@@ -30,20 +33,26 @@ const GameBoard: React.FC<GameBoardProps> = ({
           const isCurrentPath = color === "current";
           const isIncomplete = color.includes("incomplete");
 
-          let strokeWidth = "6";
-          let strokeOpacity = "0.7";
-          let strokeColor = color;
-          let strokeDasharray = undefined;
+          let strokeWidth: string;
+          let strokeOpacity: string;
+          let strokeColor: string;
+          let strokeDasharray: string | undefined;
 
           if (isCurrentPath) {
-            strokeWidth = "5";
-            strokeOpacity = "1.0";
-            strokeColor = "#ffffff";
+            strokeWidth = PATH_STYLES.CURRENT.strokeWidth;
+            strokeOpacity = PATH_STYLES.CURRENT.strokeOpacity;
+            strokeColor = COLORS.CURRENT_PATH;
+            strokeDasharray = undefined;
           } else if (isIncomplete) {
-            strokeWidth = "4";
-            strokeOpacity = "0.5";
+            strokeWidth = PATH_STYLES.INCOMPLETE.strokeWidth;
+            strokeOpacity = PATH_STYLES.INCOMPLETE.strokeOpacity;
             strokeColor = color.replace("incomplete-", "");
-            strokeDasharray = "6,3";
+            strokeDasharray = PATH_STYLES.INCOMPLETE.strokeDasharray;
+          } else {
+            strokeWidth = PATH_STYLES.COMPLETED.strokeWidth;
+            strokeOpacity = PATH_STYLES.COMPLETED.strokeOpacity;
+            strokeColor = color;
+            strokeDasharray = undefined;
           }
 
           lines.push(
@@ -151,10 +160,10 @@ const styles = StyleSheet.create({
   },
   grid: {
     position: "relative",
-    backgroundColor: "#2a2a2a",
+    backgroundColor: COLORS.GRID_BACKGROUND,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: "#555",
+    borderColor: COLORS.GRID_BORDER,
     overflow: "hidden",
   },
   cell: {
@@ -162,15 +171,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 0.5,
-    borderColor: "#444",
-    backgroundColor: "transparent",
+    borderColor: COLORS.CELL_BORDER,
+    backgroundColor: COLORS.CELL_BACKGROUND,
   },
   dot: {
     width: 24,
     height: 24,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: "#fff",
+    borderColor: COLORS.DOT_BORDER,
   },
   svgOverlay: {
     position: "absolute",
