@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import { Svg, Line } from "react-native-svg";
 import { GameBoardProps } from "../../types/game";
+import { BOARD_SIZE } from "../../constants/game";
 
 const GameBoard: React.FC<GameBoardProps> = ({
   grid,
@@ -117,7 +118,12 @@ const GameBoard: React.FC<GameBoardProps> = ({
         <View
           style={[
             styles.grid,
-            { width: gridSize * cellSize, height: gridSize * cellSize },
+            {
+              width: BOARD_SIZE,
+              height: BOARD_SIZE,
+              maxWidth: BOARD_SIZE,
+              maxHeight: BOARD_SIZE,
+            },
           ]}
         >
           {renderGrid()}
@@ -127,8 +133,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
           style={[
             styles.svgOverlay,
             {
-              width: gridSize * cellSize,
-              height: gridSize * cellSize,
+              width: BOARD_SIZE,
+              height: BOARD_SIZE,
+              maxWidth: BOARD_SIZE,
+              maxHeight: BOARD_SIZE,
             },
           ]}
         >
@@ -143,28 +151,33 @@ const styles = StyleSheet.create({
   gameBoard: {
     alignItems: "center",
     justifyContent: "center",
+    padding: 5,
   },
   grid: {
     position: "relative",
     backgroundColor: "#2a2a2a",
-    borderRadius: 10,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: "#555",
+    overflow: "hidden",
   },
   cell: {
     position: "absolute",
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#4a4a4a",
+    borderWidth: 0.5,
+    borderColor: "#444",
+    backgroundColor: "transparent",
   },
   cellText: {
     color: "#888",
-    fontSize: 10,
+    fontSize: 8,
     textAlign: "center",
   },
   dot: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
     borderWidth: 2,
     borderColor: "#fff",
   },
