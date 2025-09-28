@@ -1,4 +1,3 @@
-// Game Types
 export interface Dot {
   color: string;
   start: [number, number];
@@ -26,29 +25,6 @@ export interface PathCollection {
   [color: string]: [number, number][];
 }
 
-export interface GameState {
-  grid: Grid;
-  currentLevel: string;
-  levelData: LevelData;
-  isLevelComplete: boolean;
-  isDragging: boolean;
-  currentPath: [number, number][];
-  startDot: StartDot | null;
-  completedPaths: PathCollection;
-  incompletePaths: PathCollection;
-}
-
-export interface GameBoardProps {
-  grid: Grid;
-  paths: {
-    [color: string]: { row: number; col: number }[];
-  };
-  onGestureEvent: any;
-  onHandlerStateChange: any;
-  gridSize: number;
-  cellSize: number;
-}
-
 export interface LevelHeaderProps {
   currentLevel: string;
   levelIndex: number;
@@ -62,4 +38,15 @@ export interface GameControlsProps {
   isLevelComplete: boolean;
   onNextLevel: () => void;
   isLastLevel: boolean;
+}
+
+export interface GameBoardProps {
+  grid: Grid;
+  paths: {
+    [color: string]: { row: number; col: number }[];
+  };
+  onGestureEvent: any;
+  onHandlerStateChange: any;
+  gridSize: number;
+  cellSize: number;
 }
