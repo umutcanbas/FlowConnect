@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { GameControlsProps } from '../../types/game';
+import { COLORS } from '../../constants/colors';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const IS_SMALL_SCREEN = SCREEN_WIDTH <= 375 || SCREEN_HEIGHT <= 667;
@@ -78,38 +79,38 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   undoButton: {
-    backgroundColor: '#4a90e2',
+    backgroundColor: COLORS.BUTTON.UNDO,
   },
   resetButton: {
-    backgroundColor: '#e74c3c',
+    backgroundColor: COLORS.BUTTON.RESET,
   },
   nextLevelButton: {
-    backgroundColor: '#4caf50',
+    backgroundColor: COLORS.BUTTON.NEXT_LEVEL,
   },
   disabledButton: {
-    backgroundColor: '#666',
+    backgroundColor: COLORS.BUTTON.DISABLED,
     opacity: 0.5,
   },
   buttonText: {
-    color: '#fff',
+    color: COLORS.BUTTON.TEXT,
     fontSize: IS_SMALL_SCREEN ? 14 : 16,
     fontWeight: '600',
   },
   disabledButtonText: {
-    color: '#999',
+    color: COLORS.BUTTON.TEXT_DISABLED,
   },
   levelCompleteContainer: {
     marginTop: IS_SMALL_SCREEN ? 15 : 20,
     padding: IS_SMALL_SCREEN ? 12 : 15,
-    backgroundColor: '#2d5a27',
+    backgroundColor: COLORS.BUTTON.SUCCESS_BACKGROUND,
     borderRadius: 10,
     alignItems: 'center',
     borderWidth: 2,
-    borderColor: '#4caf50',
+    borderColor: COLORS.BUTTON.SUCCESS_BORDER,
     maxWidth: IS_SMALL_SCREEN ? 280 : 320,
   },
   levelCompleteText: {
-    color: '#4caf50',
+    color: COLORS.BUTTON.SUCCESS_TEXT,
     fontSize: IS_SMALL_SCREEN ? 16 : 18,
     fontWeight: 'bold',
     marginBottom: IS_SMALL_SCREEN ? 8 : 10,
