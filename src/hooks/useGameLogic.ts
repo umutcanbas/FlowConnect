@@ -221,8 +221,8 @@ export function useGameLogic() {
     const adjustedX = x - BOARD_PADDING;
     const adjustedY = y - BOARD_PADDING;
 
-    const col = Math.floor(adjustedX / (CELL_SIZE + 2));
-    const row = Math.floor(adjustedY / (CELL_SIZE + 2));
+    const col = Math.floor(adjustedX / CELL_SIZE);
+    const row = Math.floor(adjustedY / CELL_SIZE);
 
     if (row >= 0 && row < GRID_SIZE && col >= 0 && col < GRID_SIZE) {
       return [row, col];
