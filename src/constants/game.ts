@@ -56,30 +56,3 @@ export const LEVELS: Levels = {
     ],
   },
 };
-
-export const GAME_COLORS = {
-  BACKGROUND: "#1a1a1a",
-  GRID_BACKGROUND: "#2a2a2a",
-  CELL_BACKGROUND: "#3a3a3a",
-  CELL_BORDER: "#4a4a4a",
-  CELL_TEXT: "#888",
-  INFO_TEXT: "#aaa",
-  CURRENT_PATH: "#ffffff",
-  DOT_BORDER: "#fff",
-} as const;
-
-export const PATH_STYLES = {
-  COMPLETED: {
-    strokeWidth: "6",
-    strokeOpacity: "0.7",
-  },
-  CURRENT: {
-    strokeWidth: "5",
-    strokeOpacity: "1.0",
-  },
-  INCOMPLETE: {
-    strokeWidth: "4",
-    strokeOpacity: "0.5",
-    strokeDasharray: "6,3",
-  },
-} as const;
