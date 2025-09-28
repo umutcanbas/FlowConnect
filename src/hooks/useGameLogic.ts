@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { State } from "react-native-gesture-handler";
+
 import { Grid, LevelData, StartDot, PathCollection, Dot } from "../types/game";
+
 import { GRID_SIZE, CELL_SIZE, LEVELS } from "../constants/game";
 
 export function useGameLogic() {
@@ -60,6 +62,9 @@ export function useGameLogic() {
       !isValidPosition(newRow, newCol) ||
       !isAdjacentCell(lastPosition, [newRow, newCol])
     ) {
+      console.log(
+        `❌ Invalid move: not adjacent or out of bounds. From: ${lastPosition}, To: [${newRow}, ${newCol}]`
+      );
       return false;
     }
 
@@ -73,6 +78,9 @@ export function useGameLogic() {
     );
 
     if (isInCompletedPath) {
+      console.log(
+        `❌ Invalid move: conflicts with completed path at ${newRow},${newCol}`
+      );
       return false;
     }
 
@@ -84,6 +92,9 @@ export function useGameLogic() {
     );
 
     if (isInOtherIncompletePath) {
+      console.log(
+        `❌ Invalid move: conflicts with incomplete path at ${newRow},${newCol}`
+      );
       return false;
     }
 
@@ -136,10 +147,19 @@ export function useGameLogic() {
     const isComplete =
       (startsAtStart && endsAtEnd) || (startsAtEnd && endsAtStart);
 
+    console.log(
+      `🔍 Path completion check for ${color}: ${
+        isComplete ? "COMPLETE" : "INCOMPLETE"
+      }`
+    );
     return isComplete;
   };
 
   const completeConnection = (path: [number, number][], color: string) => {
+    console.log(
+      `✅ Completing connection for color: ${color}, path length: ${path.length}`
+    );
+
     setCompletedPaths((prev) => ({
       ...prev,
       [color]: [...path],
@@ -154,12 +174,18 @@ export function useGameLogic() {
     const totalDots = levelData.dots.length;
     const completedCount = Object.keys(completedPaths).length + 1;
 
+    console.log(
+      `🎯 Level progress: ${completedCount}/${totalDots} connections completed`
+    );
+
     if (completedCount === totalDots) {
+      console.log(`🎉 Level ${currentLevel} completed!`);
       setIsLevelComplete(true);
     }
   };
 
   const resetLevel = () => {
+    console.log("🔄 Level reset");
     setCompletedPaths({});
     setIncompletePaths({});
     setCurrentPath([]);
@@ -178,11 +204,13 @@ export function useGameLogic() {
       const newIncompletePaths = { ...incompletePaths };
       delete newIncompletePaths[lastIncompleteColor];
       setIncompletePaths(newIncompletePaths);
+      console.log(`↩️ Undid incomplete connection: ${lastIncompleteColor}`);
     } else if (completedColors.length > 0) {
       const lastCompletedColor = completedColors[completedColors.length - 1];
       const newCompletedPaths = { ...completedPaths };
       delete newCompletedPaths[lastCompletedColor];
       setCompletedPaths(newCompletedPaths);
+      console.log(`↩️ Undid completed connection: ${lastCompletedColor}`);
     }
 
     setCurrentPath([]);
@@ -198,6 +226,7 @@ export function useGameLogic() {
 
     if (currentIndex < levelNumbers.length - 1) {
       const nextLevelName = levelNumbers[currentIndex + 1];
+      console.log(`🆙 Advancing to ${nextLevelName}`);
       setCurrentLevel(nextLevelName);
       setLevelData(LEVELS[nextLevelName]);
 
@@ -209,6 +238,7 @@ export function useGameLogic() {
       setIsLevelComplete(false);
       setGrid(generateGridFromLevel(LEVELS[nextLevelName]));
     } else {
+      console.log("🏆 All levels completed!");
     }
   };
 
@@ -295,11 +325,19 @@ export function useGameLogic() {
         const color = cellValue as string;
 
         if (completedPaths[color]) {
+          console.log(
+            `❌ Cannot start drag: ${color} connection already completed`
+          );
           return;
         }
 
+        console.log(`🚀 Pan drag started: ${row},${col} color: ${color}`);
+
         setIsDragging(true);
         setStartDot({ row, col, color });
+
+        console.log(`🗑️ Clearing all incomplete paths`);
+        setIncompletePaths({});
 
         const existingIncompletePath = incompletePaths[color];
         if (existingIncompletePath) {
@@ -314,10 +352,6 @@ export function useGameLogic() {
           } else {
             setCurrentPath([[row, col]]);
           }
-
-          const newIncompletePaths = { ...incompletePaths };
-          delete newIncompletePaths[color];
-          setIncompletePaths(newIncompletePaths);
         } else {
           setCurrentPath([[row, col]]);
         }
@@ -340,9 +374,7 @@ export function useGameLogic() {
           setStartDot({ row: path[0][0], col: path[0][1], color });
           setCurrentPath([...path]);
 
-          const newIncompletePaths = { ...incompletePaths };
-          delete newIncompletePaths[color];
-          setIncompletePaths(newIncompletePaths);
+          setIncompletePaths({});
         }
       }
     } else if (state === State.END || state === State.CANCELLED) {
